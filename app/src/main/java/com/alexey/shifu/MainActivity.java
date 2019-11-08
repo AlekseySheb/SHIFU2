@@ -2,13 +2,16 @@ package com.alexey.shifu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListItemAdapter listItemAdapter;
-    ListView mMainListView;
+    private ListItemAdapter listItemAdapter;
+    private ListView mMainListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +25,14 @@ public class MainActivity extends AppCompatActivity {
         DB.add("First", "first string");
         DB.add("Second", "second string");
         DB.add("Third", "third string");
+
+        mMainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
     }
 }
