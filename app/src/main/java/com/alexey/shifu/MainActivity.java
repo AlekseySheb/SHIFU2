@@ -3,11 +3,7 @@ package com.alexey.shifu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,15 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<String> stringList = new ArrayList<>();
-        stringList.add("first");
-        stringList.add("second");
-        stringList.add("third");
-
-        listItemAdapter = new ListItemAdapter(MainActivity.this, R.layout.main_list_item, stringList);
+        listItemAdapter = new ListItemAdapter(MainActivity.this, R.layout.main_list_item, DB.firstValues);
         mMainListView = findViewById(R.id.mainListView);
-
         mMainListView.setAdapter(listItemAdapter);
 
+        DB.add("First", "first string");
+        DB.add("Second", "second string");
+        DB.add("Third", "third string");
     }
 }
