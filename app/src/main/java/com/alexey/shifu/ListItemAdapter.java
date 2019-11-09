@@ -1,35 +1,29 @@
 package com.alexey.shifu;
 
-import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.util.List;
-
-public class ListItemAdapter extends ArrayAdapter<String> {
-    public ListItemAdapter(@NonNull Context context, int resource, List<String> stringList) {
-        super(context, resource, stringList);
+public class ListItemAdapter extends CursorAdapter {
+    public ListItemAdapter(@NonNull Context context, Cursor cursor) {
+        super(context, cursor, 0);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
-            convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.main_list_item, parent, false);
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.main_list_item, parent, false);
+    }
 
-        TextView itemText = convertView.findViewById(R.id.itemText);
-
-        String string = getItem(position);
-
-        itemText.setText(string);
-
-        return convertView;
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView textView = view.findViewById(R.id.itemText);
+        String text = cursor.getString(cursor.getColumnIndexOrThrow("FIRST_VOLUMES"));
+        textView.setText(text);
     }
 }
